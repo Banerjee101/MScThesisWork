@@ -1,0 +1,136 @@
+\documentclass[a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{amsmath,amsthm,array} 
+\usepackage{multicol}
+\usepackage{adjustbox}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{gensymb}
+\usepackage{supertabular}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{blindtext}
+\usepackage{lastpage}
+\usepackage[resetfonts]{cmap}
+\usepackage{fancyvrb}
+\begin{VerbatimOut}{ot1.cmap}
+%!PS-Adobe-3.0 Resource-CMap
+%%DocumentNeededResources: ProcSet (CIDInit)
+%%IncludeResource: ProcSet (CIDInit)
+%%BeginResource: CMap (TeX-OT1-0)
+%%Title: (TeX-OT1-0 TeX OT1 0)
+%%Version: 1.000
+%%EndComments
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo
+<< /Registry (TeX)
+/Ordering (OT1)
+/Supplement 0
+>> def
+/CMapName /TeX-OT1-0 def
+/CMapType 2 def
+1 begincodespacerange
+<00> <7F>
+endcodespacerange
+8 beginbfrange
+<00> <01> <0000>
+<09> <0A> <0000>
+<23> <26> <0000>
+<28> <3B> <0000>
+<3F> <5B> <0000>
+<5D> <5E> <0000>
+<61> <7A> <0000>
+<7B> <7C> <0000>
+endbfrange
+40 beginbfchar
+<02> <0000>
+<03> <0000>
+<04> <0000>
+<05> <0000>
+<06> <0000>
+<07> <0000>
+<08> <0000>
+<0B> <0000>
+<0C> <0000>
+<0D> <0000>
+<0E> <0000>
+<0F> <0000>
+<10> <0000>
+<11> <0000>
+<12> <0000>
+<13> <0000>
+<14> <0000>
+<15> <0000>
+<16> <0000>
+<17> <0000>
+<18> <0000>
+<19> <0000>
+<1A> <0000>
+<1B> <0000>
+<1C> <0000>
+<1D> <0000>
+<1E> <0000>
+<1F> <0000>
+<21> <0000>
+<22> <0000>
+<27> <0000>
+<3C> <0000>
+<3D> <0000>
+<3E> <0000>
+<5C> <0000>
+<5F> <0000>
+<60> <0000>
+<7D> <0000>
+<7E> <0000>
+<7F> <0000>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+%%EndResource
+%%EOF
+\end{VerbatimOut}
+%Ignore everything above this, since they are irrelevant for now, but do not remove them
+
+
+%
+%this shows the margin needed
+\usepackage[margin=0.7in]{geometry}
+\numberwithin{equation}{section}
+\pagestyle{fancy}
+\fancyhf{}
+%This is the right header 
+\rhead{Right header, mostly the author and their initials}
+%left heder
+\lhead{Left header}
+\cfoot{\thepage-\pageref{LastPage}}
+\newcommand\sun{\cdot}
+%Title of the paper
+\title{Your Project title}
+%Author
+\author{Himanshu Gohil}
+\begin{document}
+\maketitle
+\section*{This is where "Abstract's title" would go}
+sample text \lipsum.
+Sample equation given in Eq(\ref{eq:label-for-sample-eqn})
+
+%If you want to number the section then remove *
+\section{Problem 3}
+new section \lipsum
+
+%This is a sub section
+\subsection{Problem 3 - Q2}
+new subsection \lipsum
+% single line equation using macro \eqline (refer to first part of the file)
+
+\end{document}

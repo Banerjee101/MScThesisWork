@@ -1,0 +1,149 @@
+Once all of the above functions are executed, and with a slight variation in the mode used, we can get the best fit data results. These best fit results give us an idea about the object observed based on its agreement with the model used (based on the reduced $\chi ^2$ value). Now one might ask what is the relation between the model and the physics behind the object. Well, I myself am not sure about the exact relation at the time of writing this report and might not be able to explain exactly how they are related with the highest degree of confidence. However, the following is what I understand of the physics behind the neutron stars and their formation at the time of this report. Also, one thing which we might do well is to focus on the way matter is accretes around the neutron star, since that is what produces the radiation that we are going to observe with our telescopes. 
+\subsubsection{The data obtained}
+\paragraph{} 
+A neutron star as the name suggests, is a body (star) made up of neutrons completely. The formation of which is something I would not like to touch on at this moment since it requires a heavy background explanation, something that I would discuss in the final report. Also, I would be discussing the other relevant details in the final report, which will be a continuation of this report. 
+\paragraph{}
+However, coming back to the data we got after performing the above steps, they are as follows.
+(Note: the light curves and the plot are the same as plotted before):
+\begin{figure}[h]
+\includegraphics[width=1.0\linewidth, height=10.5cm]{8.jpg}
+\caption{log data plot with abundance set with wilm table}
+\label{log_dp_abund_2}
+\end{figure}
+\paragraph{}
+However, thing that changes in every mode is the fitting values, which are as follows:
+\newpage
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+\hline
+Mode & Operation & Confidence range (2.706)\\
+\hline 
+nH & 0.373622 +/- 5.28984E-03 & 0.367747 to 0.38226\\ 
+PhoIndex & 2.13361 +/- 8.31921E-03 & 2.1214 to 2.14851\\
+norm & 9.60072 +/- 8.80664E-02 & 9.4879 to 9.75045\\
+gain slope & 1.00000 & -\\
+gain offset & -1.69980E-03 +/- 2.06406E-03 & -\\
+Reduced $\chi ^2$ & 1.1968 for 595 degrees of freedom & -\\
+\hline
+\end{tabular}
+\captionof{table}{PC Mode Output with 1AM central exclusion onaxis}\label{Table 1}
+\end{center}
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+\hline
+Mode & Operation & Confidence range (2.706)\\
+\hline 
+nH & 0.371123 +/- 5.16756E-03 &  0.363864 to 0.37832\\ 
+PhoIndex & 2.13220 +/- 8.70973E-03 & 2.1178 to 2.14594\\
+norm & 9.52356 +/- 8.78707E-02 & 9.39068 to 9.64524\\
+gain slope & 1.00000 & -\\
+gain offset & -1.65349E-03 +/- 1.93832E-03 & -\\
+Reduced $\chi ^2$ & 1.1081 for 595 degrees of freedom & -\\
+\hline
+\end{tabular}
+\captionof{table}{PC Mode Output with 2AM central exclusion onaxis}\label{Table 2}
+\end{center}
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+\hline
+Mode & Operation & Confidence range (2.706)\\
+\hline 
+nH & 0.359600 +/- 5.12917E-03 &  0.353017 to 0.369701\\ 
+PhoIndex & 2.11604 +/- 9.17980E-03 & 2.10175 to 2.13216\\
+norm & 9.37698 +/- 8.81168E-02 & 9.2522 to 9.52693\\
+gain slope & 1.00000 & -\\
+gain offset & -1.68211E-03 +/- 1.83363E-03 & -\\
+Reduced $\chi ^2$ & 1.1624 for 595 degrees of freedom & -\\
+\hline
+\end{tabular}
+\captionof{table}{PC Mode Output with 3AM central exclusion onaxis}\label{Table 3}
+\end{center}
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+\hline
+Mode & Operation & Confidence range (2.706)\\
+\hline 
+nH & 0.373829 +/- 4.94989E-03 &  0.367232 to 0.381223\\ 
+PhoIndex & 2.12379 +/- 8.24915E-03 & 2.11111 to 2.13771\\
+norm & 10.4787 +/- 9.25605E-02 & 10.3457 to 10.6284\\
+gain slope & 1.00000 & -\\
+gain offset & -1.70197E-03 +/- 1.87040E-03 & -\\
+Reduced $\chi ^2$ & 1.1971 for 595 degrees of freedom & -\\
+\hline
+\end{tabular}
+\captionof{table}{PC Mode Output with 1AM central exclusion offaxis}\label{Table 4}
+\end{center}
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+\hline
+Mode & Operation & Confidence range (2.706)\\
+\hline 
+nH & 0.369722 +/- 4.97655E-03 &  0.363345 to 0.375169\\ 
+PhoIndex & 2.12002 +/- 8.67284E-03 & 2.1071 to 2.13561\\
+norm & 10.3651 +/- 9.36650E-02 & 10.2351 to 10.5294\\
+gain slope & 1.00000 & -\\
+gain offset & -1.70058E-03 +/- 1.81117E-03 & -\\
+Reduced $\chi ^2$ & 1.1087 for 595 degrees of freedom & -\\
+\hline
+\end{tabular}
+\captionof{table}{PC Mode Output with 2AM central exclusion offaxis}\label{Table 5}
+\end{center}
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+\hline
+Mode & Operation & Confidence range (2.706)\\
+\hline 
+nH & 0.358971 +/- 5.12916E-03 & 0.35238 to 0.369067\\ 
+PhoIndex & 2.10559 +/- 9.17907E-03 & 2.09155 to 2.12147\\
+norm & 10.2229 +/- 9.60653E-02 & 10.0894 to 10.3822\\
+gain slope & 1.00000 & -\\
+gain offset & -1.68705E-03 +/- 1.83543E-03 & -\\
+Reduced $\chi ^2$ & 1.1628 for 595 degrees of freedom & -\\
+\hline
+\end{tabular}
+\captionof{table}{PC Mode Output with 3AM central exclusion offaxis}\label{Table 6}
+\end{center}
+\newpage
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+\hline
+Mode & Operation & Confidence range (2.706)\\
+\hline 
+nH & 0.420888 +/- 3.48069E-03 & 0.416883 to 0.427992\\ 
+PhoIndex & 2.09422 +/- 5.20132E-03 & 2.08649 to 2.10313\\
+norm & 9.66306 +/- 5.89923E-02 & 9.58003 to 9.77102\\
+gain slope & 1.00000 & -\\
+gain offset & 7.30742E-02 +/- 1.30524E-03 & -\\
+Reduced $\chi ^2$ & 1.2868 for 645 degrees of freedom & -\\
+\hline
+\end{tabular}
+\captionof{table}{FW Mode Output with no central exclusion offaxis}\label{Table 7}
+\end{center}
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+\hline
+Mode & Operation & Confidence range (2.706)\\
+\hline 
+nH & 0.418492 +/- 3.29263E-03 & 0.41367 to 0.423092\\ 
+PhoIndex & 2.09915 +/- 5.40755E-03 & 2.09045 to 2.10811\\
+norm & 9.78169 +/- 5.92744E-02 & 9.69069 to 9.87449\\
+gain slope & 1.00000 & -\\
+gain offset & 6.85415E-02 +/- 1.23011E-03 & -\\
+Reduced $\chi ^2$ & 1.3274 for 645 degrees of freedom & -\\
+\hline
+\end{tabular}
+\captionof{table}{FW Mode Output with 1AM central exclusion offaxis}\label{Table 8}
+\end{center}
+\paragraph{}
+The above show agreement with our initial presumption that the xray radiation in the 0.5 to 7.0 KeV range falls within the confidence interval so that we can assume, with a high enough degree of certainty that the radiation emitted agrees with the power law spectrum. This could be because of the nature of accretion from the central neutron star of the supernova remnant. This activity was done so that I could get a value that is close to the accepted values for crab at this energy range, and could calibrate my method in a way that would give me the said values. The project up-till now was intended to get my hands dirty with the techniques I would be using later in my project to analyze the actual data that is from some other unknown source. In short these were calibration data for me to practice on. 
+\newpage
+\section{Biblography}
+\begin{enumerate}
+\item ASTROSAT POC Website
+\item SWIFT Data Analysis
+\item Xspec Manual
+\item TIFR LAXPC Page
+\item HEASARC Data Archive 
+\item CIAO Dictionary
+\item Xselect Manual
+\end{enumerate}
