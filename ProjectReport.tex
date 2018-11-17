@@ -108,18 +108,19 @@ end
 \newcommand\pdif[2]{ \frac{\partial #1}{\partial #2}}
 \newcommand\sun{\cdot}
 \newcommand{\pth}{$^{th}$}
-\title{Project Report}
+\title{The Spectral and Temporal study of Neutron Star Ultra Comapct X-ray Binary 1A 1246-588}
 \author{Ankush Banerjee}
 \begin{document}
 \maketitle
-\begin{abstract}::Abstract goes here::
+\begin{abstract}
+Ultra Compact X-ray Binaries are a rare and mysterious class of Low Mass X-ray Binaries that have a companion with an orbital period less than an hour. These could be differentiated by the primary star being either a Neutron Star or a Black Hole. In the case of 1A 1246-588, the primary star is known to be a Neutron star, with a white dwarf companion, however, it’s orbital period is a mystery, given it’s low X-ray luminosity. Since there are no direct observation of it’s orbital period, the following work is to first, familiarize myself with the tools of the trade, the things that I would be using to analyze astrophysical data, and then try to probe the temporal and spectral properties of 1A 1246-588 using SXT and LAXPC data. Given the data, what I found has remained largely inconclusive as of now, however, comparison of the above with other satellite data remains to be done. The main intention of the project was for me to familiarize myself with the data analysis techniques used in astrophysical research and do some data analysis along the way so as to help me understand, to a certain degree how X-ray data is to be analyzed.
 \end{abstract}
 \newpage
 \tableofcontents{}
 \newpage
 \chapter{Acknowledgement}
 \paragraph{}
-First of all I would like to thank my parents for being the unshakable pillars of my life, I fail to imagine a life without their support, whatever I am is because of them both literally and figuratively. I would also like to thank my guide Dr. Sudip Bhattacharya (TIFR) who took me in as his mentee and bestowed upon me the much needed guidance and resources for this project. His role has been paramount in developing my understanding of high energy astrophysics and I can see it become my love already. Apart from giving me access to the much needed data he allowed me to sit in for the astronomy course given at TIFR by him, which I should say was one of the best experiences I've had till date. I would also like to thank Ms. Nilima Kamble (TIFR) and Ms. Kasturi Warang (TIFR) for helping me along the way and helping me understand the majority of the processes involved in processing the data obtained from the pipeline, and especially Nilima ma'am for helping me trouble-shoot the problems that I faced while trying to run the necessary software locally in my machine. I would also like to thank my professors at K. J. Somaiya College of Science and Commerce for allowing me to take a project outside my college, and guiding me through the official technicalities of the same. 
+First of all I would like to thank my parents for being the unshakable pillars of my life, I fail to imagine a life without their support, whatever I am is because of them both literally and figuratively. I would also like to thank my guide Dr. Sudip Bhattacharya (TIFR) who took me in as his mentee and bestowed upon me the much needed guidance and resources for this project. His role has been paramount in developing my understanding of high energy astrophysics and I can see it become my love already. Apart from giving me access to the much needed data he allowed me to sit in for the astronomy course given at TIFR by him, which I should say was one of the best experiences I've had till date. I would also like to thank Mr. Vikas Chand (TIFR) for helping me understand the nuances of spectral analysis and for sharing how it is supposed to be done. I would also like to thank my firends who have put up with my tantrums and mood swings during my college days and never gave up on me, I would've never completed my work if it were not for them. I would also like to thank my professors at K. J. Somaiya College of Science and Commerce for allowing me to take a project outside my college, and guiding me through the official technicalities of the same. 
 \newpage
 \chapter{Introduction to ASTROSAT}
 \paragraph{}
@@ -669,7 +670,7 @@ The light curve, as mentioned previously, is a plot of intensity with time. If t
 \paragraph{}
 After performing the GTI filter, we should now have a set of GTIs that are $1$). Not Skewed, and $2$). Do not have unnatural peaks in intensity (something that isn’t supposed to be there, however, the details are debatable, and beyond the scope of this report, for now).
 \paragraph{A very important note:}
-Given that you might end up eliminating majority of the data in this manner, this method would only be somewhat useful when you are trying to get the energy spectrum of the source. There are several things that could contribute to the sudden jumps in intensity, things such as thermonuclear bursts, among other things. However, such features can be seen across all devices and energy ranges. Hence, it is always advisable to compare the light curves across multiple devices if you wish to make sure that the features you are seeing are because of outliers and/or corrupted data. 
+Given that you might end up eliminating majority of the data in this manner, this method would only be somewhat useful when you are trying to get the energy spectrum of the source. There are several things that could contribute to the sudden jumps in intensity, things such as thermonuclear bursts, among other things. However, such features can be seen across all devices and energy ranges. Hence, it is always advisable to compare the light curves across multiple devices if you wish to make sure that the features you are seeing are because of outliers and/or corrupted data. Also, longer duration features such as outbursts (in case of NS XRBs ref \cite{SB}) would also be visible in longer duration observations, and hence would not require one to alter the GTI selections.
 \paragraph{}
 After applying the necessary time filters, extracting everything and plotting the images again, should give us the output as shown in the figure \ref{Good_FW_and_PC};
 \begin{figure}[h]
@@ -688,7 +689,7 @@ After applying the necessary time filters, extracting everything and plotting th
 \end{figure}
 \newpage
 \paragraph{}
-Now that we are done with time filtering we need to apply region filters to the above before the output becomes usable for Xspec. In order to perform region filtering we first need the regions file. A region file (with an extension .reg) is a two dimensional filter that can be used to include or exclude data from a given file. They are read and created using SAO ds9. In order to create regions file, we need to plot the image, click on edit, in the section where none is selected by default, select region, then in the same tool bar, click on region, a menu drops down, click on shape, and select annulus, i.e. a region of the shape of a ring, once done left-click on the image, and we should see a green (by default) color ring appear where we had clicked. Click on that ring, and now you can adjust the radius of both, the inner and outer circle of the ring. Once you have selected the ring, on the quick access panel, click on the region section, within which click on the information button. We would then see a small window pop up, which would give me the radius of the inner and outer circle in degrees. Click on the “degrees” button and select arcmin to display the radius in arc minutes (am). 
+Now that we are done with time filtering we need to apply region filters to the above before the output becomes usable with Xspec. In order to perform region filtering we first need a region file. A region file (with an extension .reg) is a two dimensional filter that can be used to include or exclude data from a given file. They are read and created using SAO ds9. In order to create regions file, we need to plot the image, click on edit, in the section where none is selected by default, select region, then in the same tool bar, click on region, a menu drops down, click on shape, and select annulus, i.e. a region of the shape of a ring, once done left-click on the image, and we should see a green (by default) color ring appear where we had clicked. Click on that ring, and now you can adjust the radius of both, the inner and outer circle of the ring. Once you have selected the ring, on the quick access panel, click on the region section, within which click on the information button. We would then see a small window pop up, which would give me the radius of the inner and outer circle in degrees. Click on the “degrees” button and select arcmin to display the radius in arc minutes (am). 
 \paragraph{Note:}
 Another thing that one has to take care about is that when selecting regions for PC mode, since you are selecting the regions manually, the centroid might not be the centroid of the image. In order to know the exact centroid coordinates (which will be used later in the SXTMKARF part), we need to click on the information button on the tool bar, which would open another window, with the x,y coordinates of the center, along with the radius values. Once done, click on the region drop down menu again, and select centroid. Ds9 will automatically try to detect the centroid of the image, since it is like a PSF, and hence would move the region's center to that location. Note down the centroid coordinates, and save the region. Keep doing this for every regions to get the best possible results.
 \paragraph{}
@@ -825,18 +826,12 @@ The \textbf{Auxiliary Response File} (or arf) contains the combined telescope/de
 \paragraph{}
 Based on the aforementioned discussion on the types of files needed for Xspec to work; Xspec uses those files as follows:
 \begin{enumerate}
-\item Choose a parameterized model which is thought to represent the actual
-spectrum of the source.
-\item Choose values for the model parameters.
-\item Based on the parameter values given, predict the count spectrum that
-would be detected by the spectrometer in a given channel for such a model.
-\item Compare the predicted spectrum to the spectrum actually obtained by
-the instrument.
-\item Manipulate the values of the parameters of the model until the best fit
-between the theoretical model and the observed data is found.
-\item Then calculate the “goodness” of the fit to determine how well the model
-explains the observed data, and calculate the confidence intervals for the
-model’s parameters.
+\item Choose a parameterized model which is thought to represent the actual spectrum of the source.
+\item Choose values for the model parameters. 
+\item Based on the parameter values given, predict the count spectrum that would be detected by the spectrometer in a given channel for such a model.
+\item Compare the predicted spectrum to the spectrum actually obtained by the instrument.
+\item Manipulate the values of the parameters of the model until the best fit between the theoretical model and the observed data is found.
+\item Then calculate the “goodness” of the fit to determine how well the model explains the observed data, and calculate the confidence intervals for the model’s parameters.
 \end{enumerate}
 \paragraph{C(I): The Observed Spectrum}
 In order to generate an observed spectrum, Xspec uses two files, The input pha file (or in better terms the data file) containing D(I), and the background file containing B(I), both being a function of the energy channel I. The data file tells Xspec how many data counts was detected by the instrument in a given channel and the background file tells the same for background photons in a given channel. Xspec then uses the back file to obtain a set of background subtracted spectra C(I) in units of counts per second. The background subtracted count rate (for each spectrum) is given by (ref. Xselect manual);
@@ -860,8 +855,7 @@ XSPEC also includes an option to use an auxiliary response file, which contains 
 This array is designed to represent the efficiency of the detector with the response file representing a normalized Redistribution Matrix Function, or RMF.
 Conventionally, the response is in units of $cm^2$.
 \paragraph{M(E): The Model Spectrum}
-The model spectrum, M(E), is calculated within XSPEC using the energy
-ranges defined by the response file (ref. Xselect manual):
+The model spectrum, M(E), is calculated within XSPEC using the energy ranges defined by the response file (ref. Xselect manual):
 \begin{equation}
 {M_D (J) = \int\limits_{E_{J-1}}^{E_J} M(E) dE}
 \end{equation}
@@ -911,19 +905,19 @@ Here, ig is a short form for ignore. The above command tells xspec to ignore all
 Now, we are ready to introduce a simulation model into xspec. As mentioned above, we do that by using the model (or mo, in short) command as follows;
 \begin{center}
 \item \large \textbf{XSPEC12$>$ model tbabs*(powerlaw)}
-\item \large \textbf{1:TBabs:nH$>$ 0.21}
-\item \large \textbf{2:powerlaw:PhoIndex$>$ 2.14}
-\item \large \textbf{3:powerlaw:norm$>$ 10.4}
+\item \large \textbf{1:TBabs:nH$>$ $0.21$}
+\item \large \textbf{2:powerlaw:PhoIndex$>$ $2.14$}
+\item \large \textbf{3:powerlaw:norm$>$ $10.4$}
 \end{center}
 \paragraph{}
 We can also enter the command mo tbabs*(po) in place of the above since both mean the same. Now, as it is mentioned above, we need to take care about the object's location, and basic optical signatures as well in order to conclude what would be a good model for it. Now, in this case since crab nebula is near the galactic arm, the light coming for there would face extinction due to the ISM in the galactic arm. This model calculates the cross section for X-ray absorption by the ISM as the sum of the cross sections for X-ray absorption due to the gas-phase ISM, the grain-phase ISM, and the molecules in the ISM (ref. ). The parameters entered is the best fit parameters that were found out for the ideal case, which is obtained from different sources. 
 \paragraph{}
 Now, if you wish to change the value of any of the parameters, you do it by using the following command (in this example we are setting the first parameter):
 \begin{center}
-\item \large \textbf{XSPEC12$>$ newpar 1}
+\item \large \textbf{XSPEC12$>$ newpar *}
 \end{center}
 \paragraph{}
-Now, the format for changing any parameter is as follows (*review this*):
+Now, the format for changing any parameter is as follows:
 \begin{center}
 \item \large (Value of new parameter) (step value) (minimum limit) ( minimum value) (maximum value) (maximum limit)
 \end{center}
@@ -949,7 +943,7 @@ The above command plots the logarithmic data on both axes. It also plots the var
 The next thing we would have to do after we plot is to adjust the gain of the model. This is done using the command; 
 \begin{center}
 \item \large \textbf{XSPEC12$>$ gain fit}
-\item \large \textbf{slope$>$ 1 -1}
+\item \large \textbf{slope$>$ $1$ $-1$}
 \item \large \textbf{offset$>$   }
 \item \large \textbf{XSPEC12$>$ fit}
 \end{center}
@@ -984,9 +978,9 @@ For now, we will be using bcmc. We do that as follows:
 \item \large \textbf{XSPEC12$>$ fit}
 \end{center}
 \paragraph{}
-The last thing that we need to define is the systematic error in the model we used. We do that with the help of the command systematic. Systematic errors are the errors that might be introduced into the final result due to flaws in the equipment or in the design of the experiment. Unlike random errors, systematic errors cannot be reduced by merely repeating the experiments with the same equipments, and hence may lead to an overall alteration of the final result. Hence there is a need to introduce a model dependent systematic term to the variance. We set a systematic error of 2 percent by using the following command. 
+The last thing that we need to define is the systematic error in the model we used. We do that with the help of the command systematic. Systematic errors are the errors that might be introduced into the final result due to flaws in the equipment or in the design of the experiment. Unlike random errors, systematic errors cannot be reduced by merely repeating the experiments with the same equipments, and hence may lead to an overall alteration of the final result. Hence there is a need to introduce a model dependent systematic term to the variance. We set a systematic error of $2$\% by using the following command. 
 \begin{center}
-\item \large \textbf{XSPEC12$>$ systematic 0.02}
+\item \large \textbf{XSPEC12$>$ systematic $0.02$}
 \item \large \textbf{XSPEC12$>$ fit}
 \end{center}
 \paragraph{}
@@ -994,20 +988,22 @@ Once we reach this step, we now have the results of the object in que
 \;stion which we need to analyze. We also have the final plot of the en[-ergyp] spectrum by now. Note that since the properties of every object are different, the above method (which was for the crab nebula data that I had) will vary. A significant variation will be with the model we would use, which, as mentioned above is completely based on the object we are observing and it's property. In case of this being an unknown source, we are supposed to take educated guesses as to what the object might be like, hypothesize, accordingly select the model, look at the reduced $\chi ^2$ value and judge whether the model we used to fit is the correct model explaining the source. If not, then rinse and repeat unless we find the best fit model. As mentioned in the previous sections, we check for the goodness of the output by using two commands;
 \begin{center}
 \item \large \textbf{XSPEC12$>$ goodness}
-\item \large \textbf{XSPEC12$>$ error 1 2 3}
+\item \large \textbf{XSPEC12$>$ error 1-3}
 \end{center}
 \paragraph{}
-These commands help us determine whether the variation in values we got for the three parameters (if we use one model to fit), i.e. nH, phoIndex and norm, has the accepted values of those parameters within their variation range. If not, then we are making some mistake somewhere.
+These commands help us determine whether the variation in values we got for the three parameters (if we use one model to fit), i.e. nH, phoIndex and norm, has the accepted values of those parameters within their variation range. If not, then we are making some mistake somewhere. 
+\paragraph{}
+Note that this command is crucial for you to determine whether the fit is proper or not. The error command would refit the entire spectrum again and again unless the model fits the data properly. 
 \newpage
 \section{LAXPC data processing}
 \paragraph{}
-Now, once the software is set up, which is mentioned in the previous section, we will perform the following steps to obtain the data required to plot the light curves and spectra. Now, since it is mentioned that there are two software for LAXPC data processing, we would stick to one software package for analyzing the data. Now, another thing to note is that the pipeline from IUCAA, had some problems with processing the background files, at the time of writing this report, I am not sure whether this is resolved yet, however, because of this, we would be sticking to the code by Dr. H. M. Antia, with the new background software (released in December 2017). Also, since I mentioned that the IUCAA code is just with a python shell around the FORTRAN code by Dr. Antia, I would  focus on how to use the code from Dr. Antia, for now. 
+Now, once the software is set up, which is mentioned in the previous section, we will perform the following steps to obtain the data required to plot the light curves and spectra. Now, since it is mentioned that there are two software for LAXPC data processing, we would stick to one software package for analyzing the data. Now, another thing to note is that the pipeline from IUCAA, had some problems with processing the background files, at the time of writing this report, I am not sure whether this is resolved yet, however, because of this, we would be sticking to the code by Dr. H. M. Antia, with the new background software (released in December $2017$). Also, since I mentioned that the IUCAA code is just with a python shell around the FORTRAN code by Dr. Antia, I would  focus on how to use the code from Dr. Antia, for now. 
 \paragraph{}
 Unlike the SXT analysis, the number of steps needed to analyze the LAXPC data is comparatively less since most of the work is done by a black box pipeline software (reason being I myself am not sure how the software works =]exactly). Things such as the GTI filtration is done by the software and we need not bother with explicitly removing the GTI like we did during SXT analysis. Now, one of the primary differences in a proportional counter design and a telescope design is the fact that telescope focuses the photons, and the proportional counter counts the energy of the photons based on how far they go within the Xenon-methane gas, i.e. based on what anode layer depth they go. 
 \paragraph{}
-Now, why is LAXPC used? Other than the fact that the energy range is broad (at the time of writing this report, LAXPC has the largest sensitivity range possible for any X-ray Proportional Counter, which is 3-80 KeV energy range), one of the many uses being the data generated is perfect for power spectrum analysis, i.e. plotting the power spectrum using the data, because the Nyquist frequency achievable using the data obtained goes upto 4000 hz and above (*reconfirm that*). This helps us detect QPOs, thermonuclear bursts (not sure if they would show up in frequency powspec), and other such signatures. 
+Now, why is LAXPC used? Other than the fact that the energy range is broad (at the time of writing this report, LAXPC has the largest sensitivity range possible for any X-ray Proportional Counter, which is $3-80$ $KeV$ energy range), one of the many uses being the data generated is perfect for power spectrum analysis, i.e. plotting the power spectrum using the data, because the Nyquist frequency achievable using the data obtained goes upto $4000$ $hz$ and above if I recall correctly. This helps us detect QPOs, thermonuclear bursts (not sure if they would show up in frequency powspec), and other such signatures. 
 \paragraph{}
-Now, the software is responsible to convert the level one data into level two. This is unlike the data that is processed in SXT since the data we work with is level 2 data. The LAXPC software corrects for the GTI (poor aspect solution, high background e.t.c.), and other such effects. Once done, the software generates the light curve and the background light curve out of this data which is then used with the software such as lcurve (to obtain light curve) or powsepc (to obtain the power spectrum) out of the data. 
+Now, the software is responsible to convert the level one data into level two. This is unlike the data that is processed in SXT since the data we work with is level $2$ data. The LAXPC software corrects for the GTI (poor aspect solution, high background e.t.c.), and other such effects. Once done, the software generates the light curve and the background light curve out of this data which is then used with the software such as lcurve (to obtain light curve) or powsepc (to obtain the power spectrum) out of the data. 
 \subsection{Processing steps}
 \paragraph{}
 Once the data is obtained, it should be in the following format. 
@@ -1029,18 +1025,18 @@ Now, once done, we are ready to work with the data. We now have to make a list o
 \paragraph{}
 The main goal now is to make a list of these files, i.e. the two .fits, one mkf and one .tct file from every orbit into one list file having the locations of the said files. laxpcl1, i.e. the fortran executable file requires these files to run. There is a script written to perform this function, with the name \textbf{findfile}. One would have to change the arguments in this file and run this file. You would have to change the location within the file for it to work. It is just a script that finds files within any directory and procedurally copies the locations of these files into one file. The output file would be called ls1 (the name can also be changed within the find file script). 
 \paragraph{}
-Another thing to note is that for laxpcl1 to work, one would need a gti interval as well. This is not present by default, and hence each time you wish to run the laxpcl1 script, it would look for the good time interval file, and hence would give an error prompt if it does not find the file. Hence one would have to first create a file \textbf{gti.inp} and in the first line put 0. This is done so that the software can detect a blank file which it will later change and put in the correct gti intervals. 
+Another thing to note is that for laxpcl1 to work, one would need a gti interval as well. This is not present by default, and hence each time you wish to run the laxpcl1 script, it would look for the good time interval file, and hence would give an error prompt if it does not find the file. Hence one would have to first create a file \textbf{gti.inp} and in the first line put $0$. This is done so that the software can detect a blank file which it will later change and put in the correct gti intervals. 
 \paragraph{}
-Once these things are done, one can run the laxpcl1 script. In the first line it would ask you for the pcu number, i.e. out of the 3 LAXPC pcu, which one would you like to use. Note that at the time of writing this report, the $3^{rd}$ pcu is not operational, since there is some kind of leakage in the chamber, because of which the pressure in the pcu isn't exactly 2 atmospheres, and hence it's composition is different from the other pcus, hence rending the data un-reliable. 
+Once these things are done, one can run the laxpcl1 script. In the first line it would ask you for the pcu number, i.e. out of the $3$ LAXPC pcu, which one would you like to use. Note that at the time of writing this report, the $3^{rd}$ pcu is not operational, since there is some kind of leakage in the chamber, because of which the pressure in the pcu isn't exactly 2 atmospheres, and hence it's composition is different from the other pcus, hence rending the data un-reliable. 
 \paragraph{}
-However the next thing which the program will ask for is the time bin needed. This is where you define the time bin needed by you. Note that this is also important since this decides the Nyquist frequency (half of max sampling frequency, needed in power spectrum). For example, if you would want to detect some event that you hypothesize to give a peak frequency of 300 hz, then you need to have a time bin of less than 0.006 seconds. This would translate to the maximum possible frequency of 300 Hz, (insert van der klis paper reference). After that we mention the anode layers we need, \textbf{0} for all the layers, \textbf{1} for the top layer (A1+A2), \textbf{3} for Second layer (A3+A4), \textbf{2, 4 to 10} for the respective anode layers. For example, to get the laxpc pcu 1 data, for a time bin of 0.00025 seconds (Nyquist frequency of 2000) and the data from all the pcu levels, we enter the following;
+However the next thing which the program will ask for is the time bin needed. This is where you define the time bin needed by you. Note that this is also important since this decides the Nyquist frequency (half of max sampling frequency, needed in power spectrum). For example, if you would want to detect some event that you hypothesize to give a peak frequency of $300$ $Hz$, then you need to have a time bin of less than 0.006 seconds. This would translate to the maximum possible frequency of $300$ $Hz$, (insert van der klis paper reference). After that we mention the anode layers we need, \textbf{0} for all the layers, \textbf{1} for the top layer (A1+A2), \textbf{3} for Second layer (A3+A4), \textbf{2, 4 to 10} for the respective anode layers. For example, to get the laxpc pcu $1$ data, for a time bin of $0.00025$ seconds (Nyquist frequency of $2000$) and the data from all the pcu levels, we enter the following;
 \begin{center}
 \textbf{1 0.00025 0}
 \end{center}
 \paragraph{}
-Then, the software will prompt for the channel numbers needed, i.e. the lower channel limit and the upper channel limit, the signal within which will be considered. The rest of the signal, outside these channel numbers will be ignored. Now, in order to find out the channel number, and their corresponding energy ranges, we need to open the response file for the particular pcu at the time of the observation. This is done using the software called backshiftv2 which is generated along with laxpcl1 (but using a different FORTRAN code). Now, once you execute the executable file, (similar to laxpcl1), it will ask for the pcu number and the and the anode level, the anode labeling is same as the one used for ./laxpcl1 in the previous paragraph. Then once you press enter it should ask for the time bin, lower limit channel number, upper limit channel number, and nul flag, which is a flag to fit low energy background. set it to -2 for using fit to layer 1 background for channels 0-200 (< about 20 keV). Now, since you do not have any output from ./laxpcl1 yet, you will not have the file it asks for next, which is the background file generated from ./laxpcl1. However, keep the section blank and just press enter. Upon doing so, the software would give you an error and would prompt you to enter the date of the observation, upon doing so, and pressing enter, look for a line that says, "\textbf{use ---- response file}", note down the name of that response file. Now, assuming you have downloaded the latest response files from the website, you would have to find the response file within that folder containing responses for every consecutive dates, and once found, open that response file with fits viewer (part of heasoft package, hence you would have to initialize heasoft first, and then enter fv followed by the fits file name). Once open, look for the \textbf{EBOUNDS} row, and under the view column, click on 'All', this will display the energy bounds for the respective channels. Write down the channel numbers for the respective energy bounds. This is what enter as the lower and upper channel limit. 
+Then, the software will prompt for the channel numbers needed, i.e. the lower channel limit and the upper channel limit, the signal within which will be considered. The rest of the signal, outside these channel numbers will be ignored. Now, in order to find out the channel number, and their corresponding energy ranges, we need to open the response file for the particular pcu at the time of the observation. This is done using the software called backshiftv2 which is generated along with laxpcl1 (but using a different FORTRAN code). Now, once you execute the executable file, (similar to laxpcl1), it will ask for the pcu number and the and the anode level, the anode labeling is same as the one used for ./laxpcl1 in the previous paragraph. Then once you press enter it should ask for the time bin, lower limit channel number, upper limit channel number, and nul flag, which is a flag to fit low energy background. set it to $-2$ for using fit to layer 1 background for channels 0-200 (< about $20$ $keV$). Now, since you do not have any output from ./laxpcl1 yet, you will not have the file it asks for next, which is the background file generated from ./laxpcl1. However, keep the section blank and just press enter. Upon doing so, the software would give you an error and would prompt you to enter the date of the observation, upon doing so, and pressing enter, look for a line that says, "\textbf{use ---- response file}", note down the name of that response file. Now, assuming you have downloaded the latest response files from the website, you would have to find the response file within that folder containing responses for every consecutive dates, and once found, open that response file with fits viewer (part of heasoft package, hence you would have to initialize heasoft first, and then enter fv followed by the fits file name). Once open, look for the \textbf{EBOUNDS} row, and under the view column, click on 'All', this will display the energy bounds for the respective channels. Write down the channel numbers for the respective energy bounds. This is what enter as the lower and upper channel limit. 
 \paragraph{}
-Once done, the software will ask for the number of channels to be used in the spectrum. The response files are made with 512 channels for LAXPC PCU 1 and 3, and 256 channels for LAXPC PCU 2. This could also be seen when one opens the response files for each pcu (found out using the backshiftv2, for each pcu). 
+Once done, the software will ask for the number of channels to be used in the spectrum. The response files are made with $512$ channels for LAXPC PCU $1$ and $3$, and $256$ channels for LAXPC PCU $2$. This could also be seen when one opens the response files for each pcu (found out using the backshiftv2, for each pcu). 
 \paragraph{}
 Once done, the software should ask for earth occultation correction, this is done because, as mentioned in the previous section, ASTROSAT takes data throughout the orbit, even while it is behind earth when facing the object, LAXPC has a provision of correcting this, hence this step. For starters, unless mentioned, we will consider skip this step with \textbf{*/}, and press enter. 
 \subsection{Products}
@@ -1078,12 +1074,12 @@ There are other entries in the file as well in the last line of the document, th
 }
 \item \textbf{lxpilevel2.lcurv:} FITS file giving the light curve. This shows only the time covered by GTI and shows count rate per sec. The count rate is for the specified anode and channel range and is corrected for the dead-time.
 \item \textbf{lxpilevel2.lcbk:} FITS file giving the light curve for fitted background model. This shows the time covered by GTI and the count rate per second. The cont rate is for a specified anode and channel range and is corrected for the dead time. 
-\item \textbf{lxpilevel2.pha:} ASCII file giving the spectrum. It contains count rate per sec averaged over all time specified by GTI. The number of channels is taken from the input value for NCA. First column is channel number, the next 10 columns are count rate in anodes A1-10 and last column is the total count rate in A1-7. Irrespective of value of input parameter IAN all anodes are included. The spectrum is corrected for the dead-time.
+\item \textbf{lxpilevel2.pha:} ASCII file giving the spectrum. It contains count rate per sec averaged over all time specified by GTI. The number of channels is taken from the input value for NCA. First column is channel number, the next 10 columns are count rate in anodes A$1$-$10$ and last column is the total count rate in A$1$-$7$. Irrespective of value of input parameter IAN all anodes are included. The spectrum is corrected for the dead-time.
 \item \textbf{lxpilevel2.spec:} FITS file giving the spectrum for the specified anode averaged over all time specified by GTI.  The number of channels is taken from the input value for NCA. The spectrum is corrected for the dead-time.
-\item \textbf{lxpilevel2back.pha:} ASCII file giving the modelled spectrum for the background averaged over the same duration as the source spectrum. For NUL=0 the background model based on ULD counts is used, while for NUL=-1 background model based on fit to latitude and longitude is used.  For NUL=-3 fit in 3D is used, but this is not very good. The format is the same as that for source spectrum.
+\item \textbf{lxpilevel2back.pha:} ASCII file giving the modelled spectrum for the background averaged over the same duration as the source spectrum. For NUL=0 the background model based on ULD counts is used, while for NUL=$-1$ background model based on fit to latitude and longitude is used.  For NUL=$-3$ fit in 3D is used, but this is not very good. The format is the same as that for source spectrum.
 \item \textbf{lxpilevel2back.spec:} FITS file for background spectra for the specified anode. The format is the same as that for source spectrum.
 \item \textbf{lxpilevel2.gti:} ASCII file giving the GTI generated from the observed light curve.  The first line is no. of entries and the subsequent lines specify the time range. First two columns specify the Instrument time which are used by the program, the next two columns are in UTC. This file can be edited and moved to gti.inp and the program has to be run second time to use the GTI input. To generate GTI file it is advisable to run the program with a time bin of about 1 sec and full range of anodes and channels. Once the gti.inp file is prepared the program can be run for required time bin, anodes and channels.
-\item \textbf{lxpilevel2.four:} The Fourier transform of the entire light curve. If there are too many entries then time range  may be truncated. This may not be very useful as it would cover the Earth occultation and SAA passage also, with gaps set to 0.
+\item \textbf{lxpilevel2.four:} The Fourier transform of the entire light curve. If there are too many entries then time range  may be truncated. This may not be very useful as it would cover the Earth occultation and SAA passage also, with gaps set to $0$.
 \item \textbf{lxpilevel2.mkf:} Summary of .mkf file read. It could be used to check the time range covered by each file or to check if all files are read.
 \item \textbf{lxpilevel2.uld:} ASCII file giving the ULD counts as read from the level-1 BBC file.
 \item \textbf{lxpilevel2.gap:} The first several lines are same as the .lc file but covering those period when there is a gap in data. The gaps due to SAA passage are excluded. This can be used to identify where data are missing. The last few lines give the range of Instrument time for the gaps and the last line gives the total time lost.
@@ -1092,7 +1088,24 @@ There are other entries in the file as well in the last line of the document, th
 \paragraph{}
 As one might notice, the above points have been quoted directly from the read me files provided with the software. One would do good to refer to those if one would like to get an in-depth understanding of the software. 
 \paragraph{}
-Now that the above is done, we can do several things with the fits files that are provided to us, such as plotting the light curve, and hence obtaining the power spectrum of the same. Now, there are several ways of doing the above, one could use the ASCII files to obtain obtain the plots, I personally used python to plot the data and perform normalizations (Leahy with Poisson noise level = 2, Fractional rms squared normalization with Poisson noise level = 2/\textit{meanrate} and  Absolute rms squared normalization with Poisson noise level = 2 $\times$ \textit{meanrate}). However, at the time of writing this email, I am also working on recreating those plots on IDL and read from the event file, if that would make any difference. 
+Now that the above is done, we can do several things with the fits files that are provided to us, such as plotting the light curve, and hence obtaining the power spectrum of the same. Now, there are several ways of doing the above, one could use the ASCII files to obtain obtain the plots, I personally used python to plot the data and perform normalizations (Leahy with Poisson noise level = $2$, Fractional rms squared normalization with Poisson noise level = $2$/\textit{meanrate} and  Absolute rms squared normalization with Poisson noise level = $2$ $\times$ \textit{meanrate}). However, at the time of writing this email, I am also working on recreating those plots on IDL and read from the event file, if that would make any difference. 
+\subsection{Creating window files using xronwin}
+\paragraph{}
+Before we go into making the power spectra, we need to know how to filter out outliers in the data and/or remove bad GTIs (Like we did in the case of SXT previously). One of the ways of doing so is to manually point the data using a cursor and remove those time intervals, another way of doing so is to ignore those parts of the data using windows files (this is where the xronwin tool from heasoft comes in). There are four kinds of windows that one can create using xronwin, namely:
+\begin{enumerate}
+    \item \textbf{Time Windows}
+    \item \textbf{Phase Windows}
+    \item \textbf{Intensity Windows}
+    \item \textbf{Exposure Windows}
+\end{enumerate}
+\paragraph{}
+For our case we would be primarily using time and intensity windows, however, in order to do phase resolved spectroscopy, one might have to use phase windows as well. A detailed description of the different windows can be found at \cite{xronwin1}. Creating a time window lets you filter out unwanted orbits, without having to filter them each time yo create a new light curve. Of-course one can remove the data files of those orbits completely, however, I feel that would actually result in the loss of valuable data, just because there was one outlier in the GTI. 
+\paragraph{}
+Using xronwin to create time windows is fairly straightforward. Select the time window option, then it would ask if you need to add more time intervals or delete any existing time interval. Select add time interval, and then it would ask for a minimum time and a maximum time. These are to be entered in a specific format as it would be mentioned over there itself. To get the time which needs to be entered, one would have to first open the light curve using lcurve. Then use a limited number of newbins per interval so that one can obtain the start and stop time in MET (Mission Elapsed Time) as would be mentioned in the start and stop time at the bottom of the light curve, and then use that time accordingly to obtain the necessary time interval for the window file. Another, much easier way of doing the same would be to use the GTI file, which gives the GTIs in terms of MJD, and write a program to convert it into MET, which one can then use to create an xronwin time window file. 
+\paragraph{}
+Apart from creating a time window file, one can, within the same instance, create other windows as well. Just like time windows, intensity windows also share the same logic, wherein, all you need to do is mention the maximum/minimum intensity the light curve will have, which would then create the window file accordingly. 
+\paragraph{}
+Yes, one can obviously use the ASCII output from the pipeline tools to obtain the lightcurve, and use python to correct for the data gaps and hence plot the power spectrum using python's FFT module (or simply use a tool called stingray which has inbuilt modules to perform FFT and normalize the PS accordingly) or one can use xronwin to get rid of the data gaps by ignoring those time windows, it is heavily dependent on the user and what he/she is comfortable with. 
 \subsection{Power Spectrum}
 \paragraph{}
 The importance of plotting the power spectrum is something of a necessity since knowing what periodicities we have in the signal is something that would tell us a lot of things. Depending on what you are observing, it could be anything, orbit of the satellite around earth, if the object has a companion, then their orbit around each other, if the star is accreting, then the rotation of the disc, so on and so forth. Now, if one wishes to quickly see whether there is anything in the data or not, (which would include red noise and QPOs, etc.) one can simply use the lxpilevel2.four file, which is, as mentioned above, the Fourier transformed power spectrum, i.e. the ASCII file for the power spectrum (since you need FFT to obtain the power spectrum from the light curve). One can simply use tools of their choice to plot the power spectrum, i.e. gnuplot, or fplot (which is a part of the heasoft package), or simply python, which would give you a rough idea if there is anything in the data to spend more time into and look at later. 
@@ -1115,15 +1128,15 @@ Once done, you enter the following in your terminal, ( preferably within your wo
 In place of the dots (.....) you can have the following options based on what kind of normalizations you need: (ref. powspec.txt found in the ftools page)
 \begin{enumerate}
 \item \textbf{0} = power spectra is normalized by dividing by the number of good newbins per interval.
-\item \textbf{1 or -1} = (d/f); power spectra are normalized such that the (white) noise level expected from the data errors corresponds to a power of 2 (note that correcting the data errors for instrument dead time might be necessary to bring the expected noise level to 2) The minus sign is to be put when one needs to subtract the white noise level from the powerspectrum and then display it. \textbf{(Leahy Normalization)}
-\item \textbf{2 or -2} = power spectra are normalized such that their integral gives the squared rms fractional variability (therefore the power spectrum is in units of (rms)**2/Hz). The expected (white) noise level must be subtracted to obtain the rms fractional variability of the series. The minus sign has a similar significance as in the previous case. (RMS squared normalization)
+\item \textbf{1 or -1} = (d/f); power spectra are normalized such that the (white) noise level expected from the data errors corresponds to a power of $2$ (note that correcting the data errors for instrument dead time might be necessary to bring the expected noise level to $2$) The minus sign is to be put when one needs to subtract the white noise level from the powerspectrum and then display it. \textbf{(Leahy Normalization)}
+\item \textbf{2 or -2} = power spectra are normalized such that their integral gives the squared rms fractional variability (therefore the power spectrum is in units of (rms)**$2$/Hz). The expected (white) noise level must be subtracted to obtain the rms fractional variability of the series. The minus sign has a similar significance as in the previous case. (RMS squared normalization)
 \end{enumerate}
 \paragraph{Note:}
 Now, one might find it appealing to write their own code in IDL in order to find their own normalizations, since powspec is limited in that sense. I do recommend the same. As mentioned above, one can always use tools such as python and/or IDL in order to achieve the task, which would give endless flexibility to the user to perform tweaks to the code. However, it is advisable that one compares the results using powspec or any other tools as well and try and reproduce the results in all the cases so as to be absolutely sure that the code that they wrote works and gives valid results. 
 \paragraph{}
 Coming back to the task at hand, once the user has entered the default window file, the user would be prompted to enter the new bin value. Now, this is a very important step since this is where you change the two parameters that help you determine whether or not you would observe a particular signal or not. 
 \paragraph{}
-Now, I would briefly take a break and explain, in brief what this, and another parameter you would enter in the following section is, and why it is important to detecting your signal. Now, one should refer the paper \textbf{Fourier techniques in Xray timing (1988) by M. Van Der Klis}, this is a beautiful paper which one should read if one needs to get a brief understanding of the Fourier techniques involved in obtaining a  power spectrum. 
+Now, I would briefly take a break and explain, in brief what this, and another parameter you would enter in the following section is, and why it is important to detecting your signal. Now, one should refer the paper \textbf{Fourier techniques in Xray timing ($1988$) by M. Van Der Klis}, this is a beautiful paper which one should read if one needs to get a brief understanding of the Fourier techniques involved in obtaining a  power spectrum. 
 \paragraph{}
 Now, the two important parameters are:
 \begin{enumerate}
@@ -1137,7 +1150,7 @@ Coming back to powspec, Now that you have entered a newbin value (or just kept i
 \paragraph{}
 Once done, the program would ask you for the number of intervals per frame. One is the default value, in any integer is entered above 1, then the software might calculate the average out of the entered frames and then display the averaged results. 
 \paragraph{}
-Then powspec asks for the frequency re-binning, i.e. the first parameter, W. This, as mentioned above plays an important role in observing any features in the data. Now, at this stage there are three options available to the user, if the user wants a \textbf{geometric re-binning} (then enter any value less than -1), from what I have observed, this logarithmically bins your frequency, with a steady increase of the bin size (however, I might be wrong), the second option is to have \textbf{no frequency rebinning}, i.e. 0, and the third option is to have a linear rebinning, i.e. constant rebinning i.e. $>$ 1. The user is free to choose whatever rebinning suits the feature they are trying to observe. 
+Then powspec asks for the frequency re-binning, i.e. the first parameter, W. This, as mentioned above plays an important role in observing any features in the data. Now, at this stage there are three options available to the user, if the user wants a \textbf{geometric re-binning} (then enter any value less than $-1$), from what I have observed, this logarithmically bins your frequency, with a steady increase of the bin size (however, I might be wrong), the second option is to have \textbf{no frequency rebinning}, i.e. $0$, and the third option is to have a linear rebinning, i.e. constant rebinning i.e. $>$ $1$. The user is free to choose whatever rebinning suits the feature they are trying to observe. 
 \paragraph{}
 Once the above step is done, powspec would ask for the output file name, the plotting device (a list of which could be found in the help command) till now I have used /xw (Xwindows device, helps you view the results immediately and make changes to it in the plot window) however, one is free to use whatever plotting device (/gif, /ps etc.) one sees fit, after the plotting device it would ask if the user wants to plot the results, clicking yes on this would plot the powerspectrum and move you to \textbf{PLT$>$} terminal where you can make changes to it however you see fit. 
 \subsection{Background Subtraction from the light curve}
@@ -1165,15 +1178,20 @@ Since, as mentioned above, one of the main intentions of LAXPC is to detect timi
 Now, we use \textbf{xspec} to obtain the energy spectrum even in this case, with the same methodology as mentioned in case of SXT. However, one difference is that we do not have an auxiliary response file in this case because of obvious physical reasons (LAXPC is a PCA.. unlike SXT which is a CCD sensor). 
 \paragraph{Quick fact:}
 Given what I just said above, you can actually get the energy spectrum without using the arf file for SXT, however it is not recommended that you do so. 
+\subsection{Creating Color-Color and Hardness Intensity Diagrams}
 \paragraph{}
-A sample plot using data for LAXPC2 without back shifted spectrum is as follows:
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=0.8\linewidth, height=8cm]{/home/ankush/Desktop/Workspace_project/1A_2466-588/LAXPC/outputdata/laxpcsoftv2.2_01Feb2018/Spectrum/LAXP2_trialplot1.jpg}
-\caption{LAXPC energy spectrum sample}
-\label{LAXPC_plot_sample}
-\end{center}
-\end{figure}
+As would be mentioned in the following sections a color color diagram is essentially a plot of the ratio of hard and soft color intensities (colors translating to wavelengths and hence energy, hard being high energy and soft being low energy) of the source. We get the intensities from the light curves. Now, we need four different light curves to get the color color diagram, each of them made for a particular energy bin (for example, the four light curves would be made for 3 to 5 KeV, 5 to 9 KeV, 9 to 13 KeV and 13 to 20 KeV). Each would have different intensities to them depending on which energy the source peaks in emission. Then once the light curves are obtained, all we need to do is to compute the ratios of the energies (like (5 to 9 KeV)/(3 to 5 KeV) as soft color and (13 to 20 KeV)/(9 to 13 KeV) as hard color) and hence plotting them with hard color along the y axis and soft color along the x. Since the change in the state of the source translates directly to it's intensities in different energy bands, the color color diagram shows us how the source changes with time over the duration of the observation. 
+\paragraph{}
+Creating a color color diagram is easy since all you have to do is use lcurve, then, when it asks you to enter the number of files to work with, (that is the first option) enter 4. Then, in an ascending order enter the different light curves for different energies, and then when the program asks to plot the CCD, press 1. Note that this is where the window file that you created with xronwin plays a crucial role of eliminating outlier data for all the light curves, and maintains uniformity (mind you, this would be the case only when the instrument is the same). Now, one can also use light curves for different instruments, together to make one CCD, however, it would further complicate things since now, it is necessary that we normalize all the light curves first before using them to plot the CCD. One way to do so would be to use python to normalize the light curves with a known calibration data (presumably Crab data taken by the same instruments) and then plotting the ratios of the counts as mentioned above. Now, note that the bin time of the the light curves should be the same in all the above cases. 
+\paragraph{}
+Now, just like in the case of CCD, the Hardness Intensity Diagram (HID) is plot using two (and in some cases 3) light curves. The HID is basically a plot of the Hardness (that is the ratio in hard or soft color) and the intensity of the counts in that ratio. Now, when I mentioned that there are some cases when there are 3 light curves used, the HID axes for Hardness is plot using two energy levels (say 3-5 and 5-9 KeV) and the intensity is taken for the combined energy range using the third light curve (that is 3-9 KeV). Personally I do hav e my doubts with the latter method. 
+\paragraph{}
+Examples of the same can be seen in the final section regarding my work. 
+
+
+
+\newpage
+\clearpage
 \section{Plotting Combined energy spectrum using SXT and LAXPC data}
 \paragraph{}
 Following the previous sections we know that we use Xspec for both LAXPC and SXT energy spectrum, the only difference being in the models we use for both, which are just slightly different. However, in this section we would look at the combined energy spectrum plot using both LAXPC and SXT data. 
@@ -1199,7 +1217,7 @@ Apart from this, the rest is the same with the models, xsect, abund, systematics
 \begin{center}
 \textbf{model constant*tbabs (bbody + powerlaw)}
 \end{center}
-And when it prompts for the first model, we just enter \textbf{1 0} to freeze the constant for lower energy to 1, and skip the rest. So, essentially, what we end up having is one of the constants is frozen to 1 and the software calculates the offset (constant) in the second data set's case based on the best fit parameters and spews out the result. 
+And when it prompts for the first model, we just enter \textbf{1 0} to freeze the constant for lower energy to $1$, and skip the rest. So, essentially, what we end up having is one of the constants is frozen to $1$ and the software calculates the offset (constant) in the second data set's case based on the best fit parameters and spews out the result. 
 \paragraph{Note}
 Even when you wish to enter the gain fit command, you need to keep in mind that you would have to enter gainfit for both spectrum as follows:
 \begin{center}
@@ -1208,160 +1226,28 @@ Even when you wish to enter the gain fit command, you need to keep in mind that 
 ... so on and so forth
 \end{center}
 \paragraph{}
-The rest is the same as that mentioned for SXT, i.e. freezing the slope as 1 and calculating the best fit offset value. The following is a good example of a combined light curve which gives a good estimate of the energy spectrum of the object within 0.4 KeV to 20 KeV. Now one of the reasons why this is important is that it allows the object to be seen through several instruments and helps compare them all in one plot. 
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=0.8\linewidth, height=8cm]{/home/ankush/Desktop/Workspace_project/1A_2466-588/LAXPC/outputdata/laxpcsoftv2.2_01Feb2018/Spectrum/LAXPC2+SXT_test2_0p00025_3-10kev.jpg}
-\caption{LAXPC2 + SXT combined energy spectrum}
-\label{LAXPC+SXT combined LC}
-\end{center}
-\end{figure}
+The rest is the same as that mentioned for SXT, i.e. freezing the slope as 1 and calculating the best fit offset value. The following is a good example of a combined light curve which gives a good estimate of the energy spectrum of the object within $0.4$ $KeV$ to $20$ $KeV$. Now one of the reasons why this is important is that it allows the object to be seen through several instruments and helps compare them all in one plot. 
 \paragraph{}
-Now as I had mentioned earlier, it is not mandatory that this should contain just two plots, it can contain more than two plots, and each can overlap one another. The black spots data points are the SXT data set, and the red data points are the LAXPC PCA 2 data points. One can also add LAXPC 1 and SXT FW mode data points as well, however, I do not yet have the FW mode data for this source. A combined energy spectrum for LAXPC1 (green), LAXPC2 (red) and SXT (black) is as follows:
+Now as I had mentioned earlier, it is not mandatory that this should contain just two plots, it can contain more than two plots, and each can overlap one another. The black spots data points are the SXT data set, and the red data points are the LAXPC PCA $2$ data points. One can also add LAXPC $1$ and SXT FW mode data points as well, however, I do not yet have the FW mode data for this source. A combined energy spectrum for LAXPC1 (green), LAXPC2 (red) and SXT (black) is as shown in in figure \ref{LAXPC1+2+SXT combined spec}.\newpage
 \paragraph{}
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.8\linewidth, height=8cm]{/home/ankush/Desktop/Workspace_project/1A_2466-588/LAXPC/outputdata/laxpcsoftv2.2_01Feb2018/Spectrum/LAXPC1+2+SXT_0p4-20KeV.jpg}
+\includegraphics[width=0.8\linewidth, height=8cm]{tbabs_bbody_pow_SXT_laxpc1-2.pdf}
 \caption{LAXPC2 + LAXPC1 + SXT combined Spectrum}
-\label{LAXPC1+2+SXT combined LC}
+\label{LAXPC1+2+SXT combined spec}
 \end{center}
 \end{figure}
 \paragraph{}
 Another minor detail to note would be that time bin chosen for the data is of no concern in this case since the time element is lost when one tries to plot the energy spectrum of the data. 
-\newpage
-\clearpage
-\section{RXTE Data Analysis}
 \paragraph{}
-Now, assuming that one has access to the data from HEASARC. Upon downloading the data it would be sorted as per the proposal numbers numbers. These files have \textbf{PXXXXX} format, where P stands for proposal followed by the five digit proposal number, these stay the same throughout the mission. Upon entering the file one would find multiple files, they are of the following format:
+Now, one might notice that the spectrum has several dotted lines as well. These are the model contributions to the data. This particular plot was made using four models with various parameters. The same one mentioned above. However, once you plot these in the /xw plotting window, you might not see the model contribution pop right up. for that you would have to use the command:
 \begin{center}
-\textbf{NNNNN-TT-VV-SSX}
+\textbf{XSPEC$>$ pl eeufspec del}
 \end{center}
-Where:
-\begin{enumerate}
-\item \textbf{NNNNN} is the five digit proposal number, identical to the parent directory.
-\item \textbf{TT} is the two digit target number. In case of one target the target number may be zero.
-\item {\textbf{VV} is the two digit viewing number which tracks the number of scheduled looks at the target, in particular the viewing number corresponds to:
-\begin{enumerate}
-\item different (requested) observations of the same target,
-\item different instrument configurations during the same pointing.
-\end{enumerate}}
-\item {\textbf{SS} is the two digit sequence number used for identifying different pointings that make up the same viewing:
-\begin{enumerate}
-\item for different scans, for scan mapping of extended sources,
-\item if it is decided that for operational reasons, to split the viewing into more than one chunk, or,
-\item if it was split "by accident",  by a TOO (Target Of Opportunity), for instance. 
-\end{enumerate}
-}
-\item {\textbf{X}, the 15\pth character, when present, indicates
-\begin{enumerate}
-\item \textbf{A} a slew before observation
-\item \textbf{Z} a slew after observation
-\item \textbf{S} scan observation
-\item \textbf{R} Raster grid observation
-\item \textbf{G,C,D} ObsIDs that may contain the data gaps
-\item \textbf{0-9} segments of a long observation (i.e. $>$ 8 hours)
-\item \textbf{b-r} reserved for real time configuration changes
-\end{enumerate}
-When not present, it indicates a regular pointed observation of $<$8 hours, or the last segment of a long observation. 
-}
-\end{enumerate}
-\paragraph{Note:}The above and what is followed can be found at \cite{RXTEG1}. It is highly recommended that one refer that link if need be.
 \paragraph{}
-Now, once in, each of these subdirectories contain a set of 15 sub-directories, each containing data files derived from a single spacecraft subsystem. They are as follows:
-\begin{enumerate}
-\item \textbf{ace} : Attitude Control Electronics and star trackers.
-\item \textbf{acs} : Attitude Control System.
-\item \textbf{cal} : References to files in the Calibration Database*. 
-\item \textbf{clock} : Time delta correction data from Mission Operations Center*.
-\item \textbf{eds} : Experiment Data System housekeeping.
-\item \textbf{fds} : Flight Data System.
-\item \textbf{gsace} : Gimbals and Solar Array Control Electronics.
-\item \textbf{hexte} : HEXTE science and housekeeping data (Important).
-\item \textbf{ifog} : Interferometric Fiber Optics Gyroscope.
-\item \textbf{ipsdu} : Instrument Power Switching and Distribution Unit.
-\item \textbf{orbit} : Orbit ephemeris from the Flight Dynamics Facility*.
-\item \textbf{pca} : PCA science and housekeeping data (Important). 
-\item \textbf{pse} : Power System Electronics.
-\item \textbf{spsdu} : Spacecraft Power Switching and Distribution Unit
-\item \textbf{stdprod} : Standard Products - cleaned light curves, spectra etc (Important).
-\end{enumerate}
+After that and a few model parameter alterations (so that the models fit to the data in the best possible manner) we arrive at the final result. 
 \paragraph{}
-\textbf{*}If the top level Cal, Clock, and OrbitEphem directories exist, then these subsystems simply contain links to those files. The links exist so you can find the appropriate files using the index files via XDF. If those directories do not exist, then the files themselves should reside in each subsytem, so there may be many duplicate files in different ObsIds.
-\paragraph{Note:}
-ASM is not included.
-\paragraph{}
-Now, within the above subsystems, each one of them are a set of several distinct sources of telemetry. These telemetry sources are known as \textbf{Applications} and are designated by \textbf{AppIds}. In all there are 255 AppIds, and the telemetry packets they produce end up in corresponding RXTE data files after conversion to FITS on the ground. For now, let us focus on the AppIds of PCA and HEXTE since those would be the ones we would be working on. 
-\paragraph{PCA AppIds:}
-\begin{enumerate}
-\item \textbf{55 EA1}
-\item \textbf{59 EA2}
-\item \textbf{63 EA3} 
-\item \textbf{70 EA5 Standard 1} (Binned Mode)
-\item \textbf{74 EA6 Standard 2} (Binned Mode)
-\item \textbf{79 EA7}
-\item \textbf{90 PCU0 Hk}
-\item \textbf{91 PCU1 Hk}
-\item \textbf{92 PCU2 Hk}
-\item \textbf{93 PCU3 Hk}
-\item \textbf{94 PCU4 Hk}
-\end{enumerate}
-\paragraph{HEXTE AppIds:}
-\begin{enumerate}
-\item \textbf{80 Cluster 0 Science data}
-\item \textbf{81  Cluster 0 Burst data}
-\item \textbf{82  Cluster 0 Archive data}
-\item \textbf{83  Cluster 0 16-s Hk}
-\item \textbf{84  Cluster 0 Calibration spectrum}
-\item \textbf{85  Cluster 1 Calibration spectrum}
-\item \textbf{86  Cluster 1 Science data}
-\item \textbf{87  Cluster 1 Burst data}
-\item \textbf{88  Cluster 1 Archive data}
-\item \textbf{89  Cluster 1 16-s Hk}
-\item \textbf{251  Cluster 0 64-s Hk}
-\item \textbf{252  Cluster 1 64-s Hk}
-\item \textbf{253  Cluster 0 128-s Hk}
-\item \textbf{254  Cluster 1 128-s Hk}
-\end{enumerate}
-\paragraph{}
-Note that the above can be found in \cite{RXTEG1} and it is recommended that if there arises a need for other AppIds then one would do good to refer the webpage.
-\paragraph{}
-Now, the contents of the telemetry packets from the three scientific subsystems, ASM, PCA and HEXTE can be arranged in different ways to maximize the science return in the available telemetry budget. This amounts to choosing an observing mode and setting the adjustable parameters which define the mode. The combination of mode and mode parameters is known as the \textbf{configuration}. This is important since data from the same AppId and configuration have a truly homogeneous format and can be reduced together in the same way. 
-\paragraph{}
-RXTE has several possible configurations however along with the flexibility to add new ones, however, the data that we get from the Internet download will only have those configurations chosen for that particular observation. 
-\paragraph{}
-The RXTE data files -FITS data tables to be exact- follow these design principles:
-\begin{enumerate}
-\item \textbf{Homogeneous contents:} The contents of an individual data file come from the same application.
-\item {\textbf{Time Span:} A new data file is started when:
-\begin{enumerate}
-\item a new observation begins,
-\item the configuration changes, or
-\item the application is rebooted (\textbf{Note:} Event Analyzers are rebooted once per orbit)
-\end{enumerate}
-}
-\item \textbf{Rows:} One row per packet or logical group of packets in time order. 
-\item \textbf{Columns:} Data from different data sources will be separated into different columns, some of which may contain arrays rather than single values.
-\end{enumerate}
-\paragraph{}
-For each ObsID, the stdprod directory should contain an XTE filter file, named \textbf{FP\_xxxxxxx-yyyyyyy.xfl} (where xxxxxxx and yyyyyyy are start and stop time in hexadecimal mission elapsed seconds). The filter file incorporates much of the housekeeping data from other subsystems and is intended for creating GTI based on those data. Checking, and remaking if necessary, this file is one of the first steps to data analysis. Make sure it includes everything needed (by plotting the columns ELV, OFFSET, PCUn\_ON, BKGD\_THETA, BKGD\_PHI, NUM\_PCU\_ON, TIME\_SINCE\_SAA, and ELECTRONn at minimum).
-\paragraph{}
-Now, to start the data analysis, we need to find the files needed to do so, we do this using a tool available with the heasoft package called XDF (XTE data finder) which is a GUI based tool to make browsing the hierarchical directory structure much easier. It's end-product is a list of filenames corresponding to the data you want to analyze, as chosen by the target name, the time of observation, the instrument and configuration. 
-\paragraph{}
-To start XDF, one would first have to initialize heasoft, and then type '\textbf{xdf}' in the system prompt. After this, the following steps are to be followed, as per the requirement (*Change this as required*):
-\begin{enumerate}
-\item Set the path to the directory containing the FMI (FITS Master Index) file - This is usually the directory with the aforementioned file name syntax, i.e. \textbf{NNNNN-TT-VV-SSX}. The significance of that file name is given above. Copy and paste the file's location on the \textbf{Path:} section, and press \textbf{Make ObsList}.
-\item This fills the \textbf{Observations} box with one-line summaries of the \textbf{ObsIds} in the top level directory. For each ObsId, the directory name, target name, and time range are listed. At this point you can choose a particular target or time range, though for most GOs this option is not needed.
-\item You select \textbf{ObsIds} themselves by clicking on them with the mouse or by pushing the \textbf{All/None} button.
-\item The next step would be to select the \textbf{subsystems}, from the subsystems box by clicking on the names of the ones you are interested in. 
-\item Now, to see the \textbf{AppIds/Configurations} of the chosen subsystem, click on the \textbf{Make AppIdConfigList} button and you would see that the AppIds/Configurations section shows only those AppIds that are relevant to the subsystem you selected. You need to select the subsystems needed from this window.
-\item (*Solve the core dump problem and then add the steps here*)
-\end{enumerate}
-\paragraph{}
-The above can work for both binned (eg. standard-2 data) and event mode data.
-
-
-
-
+Now, do note that what statistics you use for the data analysis is crucial for the results to be reliable. If the data is poissonian, one cannot use $\chi^2$ statistics to fit the model. The same applies to the background. Hence usign correct statistic model is required, refer \cite{redchisquared}.
 
 
 
@@ -1381,14 +1267,14 @@ The story of a remnant body starts from the death of a star. This is when the nu
 \paragraph{}
 Let us try and understand this step by step. 
 \paragraph{}
-A star forms when there is enough gas, cold enough (~10 to 20 K) to condense to such an extent that, after a certain period of darkness caused due to their temperature and low optical depth for visible light (however we do see emissions in the IR spectrum e.g. Bernard 68 since the optical depth is wavelength dependent) and their density, and a tinge of push from any strong enough neighboring event (could be anything from supernovae explosion to fluctuations i.e. Jean's instability in the massive gas cloud etc. or, the galactic density wave interacting with a cloud), could trigger further collapse, but not nuclear burning, in this stage the star is a proto star, i.e. a dense gas cloud that is well on its way to become a star, but doesn't have nuclear fusion happening at its core. However, as more matter is pulled in and the core keeps getting hotter and hotter, eventually triggering nuclear fusion at its core. Hence, at this stage the star enters the main sequence. 
+A star forms when there is enough gas, cold enough (~$10$ to $20$ $K$) to condense to such an extent that, after a certain period of darkness caused due to their temperature and low optical depth for visible light (however we do see emissions in the IR spectrum e.g. Bernard $68$ since the optical depth is wavelength dependent) and their density, and a tinge of push from any strong enough neighboring event (could be anything from supernovae explosion to fluctuations i.e. Jean's instability in the massive gas cloud etc. or, the galactic density wave interacting with a cloud), could trigger further collapse, but not nuclear burning, in this stage the star is a proto star, i.e. a dense gas cloud that is well on its way to become a star, but doesn't have nuclear fusion happening at its core. However, as more matter is pulled in and the core keeps getting hotter and hotter, eventually triggering nuclear fusion at its core. Hence, at this stage the star enters the main sequence. 
 \paragraph{}
 \begin{wrapfigure}{r}{0.5\textwidth}
 \includegraphics[width=1.0\linewidth, height=5cm]{HR_Diagram.jpg}
 \caption{Star's transition from proto to Main sequence (Hayashi and Henney track)}
 \label{Hayashi and henney track}
 \end{wrapfigure} 
-Now, depending on how much mass the proto star had when it was forming, it steps into the main sequence stage at different times (the less massive star enters the main sequence later than the high mass star since the "big one" starts burning hydrogen earlier attributed to the higher density at it's core), depending on several conditions such as the mass of the collapsing gas cloud, e.t.c. This also decides where in the main sequence the star will end up when it enters, the massive ones ending up at the upper end and the less massive ones in the lower end of the HR diagram. Note that in order for the hydrogen burning to start, the molecules would have to cross the coulomb potential barrier. However, given the temperatures at the stellar cores which are of the order of $\approx$ 10$^8$ K, we could rarely expect that to happen, however, the only other mechanism that could cause fusion at such energies would be Quantum Tunneling (George Gamow, 1928). Upon doing some Q value calculations, we can see that the maximum energy release is by hydrogen burning and it decreases all the way to iron, after which it goes to negative (i.e. in order to fuse nuclei heavier than Iron one would have a net loss in energy, in other words, one would lose energy implying no outward force to maintain a spherical shape).
+Now, depending on how much mass the proto star had when it was forming, it steps into the main sequence stage at different times (the less massive star enters the main sequence later than the high mass star since the "big one" starts burning hydrogen earlier attributed to the higher density at it's core), depending on several conditions such as the mass of the collapsing gas cloud, e.t.c. This also decides where in the main sequence the star will end up when it enters, the massive ones ending up at the upper end and the less massive ones in the lower end of the HR diagram. Note that in order for the hydrogen burning to start, the molecules would have to cross the coulomb potential barrier. However, given the temperatures at the stellar cores which are of the order of $\approx$ $10^8$ K, we could rarely expect that to happen, however, the only other mechanism that could cause fusion at such energies would be Quantum Tunneling (George Gamow, $1928$). Upon doing some Q value calculations, we can see that the maximum energy release is by hydrogen burning and it decreases all the way to iron, after which it goes to negative (i.e. in order to fuse nuclei heavier than Iron one would have a net loss in energy, in other words, one would lose energy implying no outward force to maintain a spherical shape).
 \paragraph{}
 \begin{wrapfigure}{r}{0.5\textwidth}
 \includegraphics[width=1.0\linewidth, height=7cm]{star_shell.jpg}
@@ -1399,7 +1285,7 @@ Since the the amount of light fuel is limited within the star, (H and He are the
 \paragraph{}
 \begin{wrapfigure}{l}{0.6\textwidth}
 \includegraphics[width=1.0\linewidth, height=6cm]{evo_of_stars.jpg}
-\caption{Story of evolution of the stars (*instert diagram ref here*)}
+\caption{Story of evolution of the stars}
 \label{NS_Diagram}
 \end{wrapfigure}
 The pressure during these times is so high that the electron degeneracy pressure can't stop it (if it is enough to halt the collapse, the remaining core forms a dwarf star), nor can the atomic structure can stop it, at this stage the electrons and protons are crushed together to produce neutrons, with a heck load of gamma radiation and neutrinos. This is when the in-falling lighter material gets ejected out (as a rebound to the in-falling heavier element that crashes into the core). This, added to the huge amounts of photons that are released during the photo-dissociation of elements in the core, causes the outer shells of the super giant to expand exponentially. This expansion causes the optical depth of the material to decrease letting the huge quantities of photons, that would otherwise be scattered and absorbed by the inner layers of the star, to be sent out into space, leading to huge flux of photons radiated at all directions. This would explain the huge EM flux radiated from the core during this process, leading to supernovae being few of the brightest events to occur in a galaxy (or maybe even the universe). This is the time when most of the heavy elements (heavier than iron and a few that are lighter) form in the universe and are scattered throughout the galaxy. 
@@ -1426,37 +1312,144 @@ As mentioned in the above section, we would be studying neutron star binaries. N
 \paragraph{}
 Now, a neutron star binary is a system where one or more members of the system is a neutron star. These could be any number of combinations, and each of those combinations having their own formation history. Hence it would be good for now if we keep that subject aside just to keep this report short. 
 \paragraph{}
-However, coming back to the neutron star binaries, and the system of my work, Ultra Compact X-ray Binaries (UCXB). Now, from the huge number of neutron star binaries, there are some systems where the companion star is a star with mass $<$1 \(M_\odot\), i.e. 1 solar mass (\(M_\odot\)). These systems could have anywhere from white dwarfs and sun like stars as companions. These kind of systems are called Low Mass Xray Binaries. X-ray since when they funnel matter into them they emit mostly in X-rays, which as mentioned above could come from neutron star surface or the inner regions of the accretion disk. Now, one might rightly argue that one can have a similar system with a black hole instead of a neutron star. However such a system would have a vastly different X-ray signature from, say the neutron star, and hence would need a separate discussion on their own, and since the object that we are concerned with in this report is a neutron star system, we would leave out the black hole alternatives to LMXBs and UCXBs. 
+However, coming back to the neutron star binaries, and the system of my work, Ultra Compact X-ray Binaries (UCXB). Now, from the huge number of neutron star binaries, there are some systems where the companion star is a star with mass $<1$ \(M_\odot\), i.e. $1$ solar mass (\(M_\odot\)). These systems could have anywhere from white dwarfs and sun like stars as companions. These kind of systems are called Low Mass Xray Binaries. X-ray since when they funnel matter into them they emit mostly in X-rays, which as mentioned above could come from neutron star surface or the inner regions of the accretion disk. Now, one might rightly argue that one can have a similar system with a black hole instead of a neutron star. However such a system would have a vastly different X-ray signature from, say the neutron star, and hence would need a separate discussion on their own, and since the object that we are concerned with in this report is a neutron star system, we would leave out the black hole alternatives to LMXBs and UCXBs. 
 \paragraph{}
 Now, coming back to the topic. we now know/have a brief idea about what a LMXB system is. Now, as mentioned earlier, these kinds of objects are further divided into different categories, out of those an UCXB is a system where the orbital period of the companion is so less that it completes one orbit around the neutron star in less than an hour. These kind of orbits are such that the companion star, in order to maintain the laws of relativity, would have to be extremely close to the neutron star, and hence, in most cases, the star would have matter outside it's Roche limit, and hence we would definitely see some kind of high energy emission, based again on the system. 
 \section{1A 1246-588}
 \subsection{What we know}
 \paragraph{}
-As mentioned above, 1A 1246-588 falls under the UCXB category. Now, one might ask how. Now because of the Roche lobe overflow, the mass of the companion star is low, and hence the companion star is faint in optical, however, because this matter is funneled into the neutron star, these systems glow very brightly in X rays, which is correlated to the size of Roche lobe (since the X ray flux would be a function of how much matter is falling into the NS, and hence would be related to the mass of the companion star and it's luminosity, and to a certain degree its composition). Hence by observing the structure of the spectrum and the x ray timing analysis of the source and the color color diagram (CD), one can see that it (1A 1246 588) is a LMXB. (I haven't mentioned the proof since that would make the report even longer that it already is.)
+As mentioned above, $1$A $1246$-$588$ falls under the UCXB category. Now, one might ask how. Now because of the Roche lobe overflow, the mass of the companion star is low, and hence the companion star is faint in optical, however, because this matter is funneled into the neutron star, these systems glow very brightly in X rays, which is correlated to the size of Roche lobe (since the X ray flux would be a function of how much matter is falling into the NS, and hence would be related to the mass of the companion star and it's luminosity, and to a certain degree its composition). Hence by observing the structure of the spectrum and the x ray timing analysis of the source and the color-color diagram (CCD), one can see that $1$A $1246$-$588$ is a LMXB. For further proof refer t'Zand et.al.\cite{t'Zand}.
 \paragraph{}
-Now, there are two kinds of Neutron Star LMXB sources, i.e. the Z and the Atoll sources (Hasinger \& van der Klis 1989). These sources have a characteristic color diagram (CD) and hence by comparing the hard (high energy $>$ 10 keV) and the soft (low energy $<$ 10 keV) luminosities one can classify between them. Now, using the color color diagram, it was observed that 1A 1246-588 falls under the atoll sources (supported by the narrative of atoll sources that they have low luminosity) (*find the ref*)
+Now, there are two kinds of Neutron Star LMXB sources, i.e. the Z and the Atoll sources (Hasinger \& van der Klis $1989$). These sources have a characteristic color diagram (CCD) and hence by comparing the hard (high energy $>$ $10$ $keV$) and the soft (low energy $<$ $10$ $keV$) luminosities, one can classify between them. Now, using the CCD, it was observed that $1$A $1246$-$588$ falls under the category of an atoll source (supported by the narrative of atoll sources that they have low luminosity, and that their phase doesn't change as often as other sources).
 \paragraph{}
-Now, apart from the fact that it is a candidate UCXB, we also know that this is one of the faintest UCXBs, with an absolute magnitude of M$_V$=3.4 -- 4.0 (Jonker et.al. 2006), i.e. absolute magnitude of the optical counterpart of 1A 1246-588. This also suggests (van Paradijs \& McClintock 1994) that these systems are UCXBs, since here the faintness of the counterpart is due to the re-procession of the X-rays in a physically small accretion disk. 
+Now, apart from the fact that it is a candidate UCXB, we also know that this is one of the faintest UCXBs, with an absolute magnitude of M$_V$=$3.4$ -- $4.0$ (Jonker et.al. 2006), i.e. absolute magnitude of the optical counterpart of 1A 1246-588. This also suggests (van Paradijs \& McClintock 1994) that these systems are UCXBs, since here the faintness of the counterpart is due to the re-possession of the X-rays in a physically small accretion disk. 
 \paragraph{}
-This preposition is further supported by the fact that optical spectroscopic data does not show features from hydrogen (Zand et al. 2008) which is in support of the UCXB proposition (by Bassa et al. 2006). The same paper (Zand et al. 2008) also notes that since there are no persistent dips (eclipses) in the X-ray flux implying that the inclination angle is at most 70$^o$ (Horne 1985). The correlation factor which is used to derive the accretion flux (as mentioned, periodic dips in the X ray luminosity due to eclipsing caused by the companion star), from the observed flux, is at most 3 (=1/cos70$^o$). Combining both uncertainties, the ratio between the persistent flux and the Eddington limit is accurate to within a factor of 4. This being a constraint measurement since it is significantly below the 2\% mark, a regime in which a source is said to be UCXB. This further confirms that 1A 1246-588 is an UCXB (t'Zant et al. 2007). 
+This is further supported by the fact that optical spectroscopic data does not show hydrogen features (Zand et al. 2008) which is in support of it being an UCXB (by Bassa et al. 2006). The same paper (Zand et al. 2008) also notes that since there are no persistent dips (eclipses) in the X-ray flux implying that the inclination angle is at most 70$^o$ (Horne 1985). The correlation factor which is used to derive the accretion flux (as mentioned, periodic dips in the X ray luminosity due to eclipsing caused by the companion star), from the observed flux, is at most 3 (=1/cos70$^o$). Combining both uncertainties, the ratio between the persistent flux and the Eddington limit is accurate to within a factor of 4. This being a constrained measurement since it is significantly below the 2\% mark, a regime in which a source is said to be UCXB, further confirming that 1A 1246-588 is an UCXB (t'Zant et al. 2007). 
 \paragraph{}
-This is qualitatively explained by the smaller accretion disks in UCXB needing a smaller irradiation flux to remain in a hot high viscosity state, that sustains accretion into compact object (van Paradijs 1996). For a much more detailed reference, refer the paper by 't Zand et al. 2008.
+This is qualitatively explained by the smaller accretion disks in UCXB needing a smaller irradiation flux to remain in a hot high viscosity state, that sustains accretion into compact object (van Paradijs 1996). For a much more detailed reference, refer the paper by 't Zand et al. 2008 \cite{t'Zand}.
 \paragraph{}
-Now, we also know that this object has a Kilohertz QPO at 1258 KhZ, with a single trial significance of more than 7 $\sigma$(Jonker et al. 2007) in the soft high flux state. However this was not observed in our data, more to that later. The same paper also confirmed, using spectral properties that the object is an atoll source. This paper also reports the mass limits of the neutron star is at M$_{NS} < 1.75 M_{sol}$ and R $<$ 15.5 kilometers. The same paper also reported that during the low-flux stage, it's spectrum resembles that of the crab.
+Now, we also know that this object has a Kilohertz QPO at 1258 KhZ, with a single trial significance of more than 7 $\sigma$(Jonker et al. 2007) in the soft high flux state. However this was not observed in our data, more on that later. The same paper also confirmed, using spectral properties that the object is an atoll source. This paper also reports the mass limits of the neutron star to be at M$_{NS} < 1.75 M_{sol}$ and R $<$ 15.5 kilometers. The same paper also reported that during the low-flux stage, it's spectrum resembles that of the crab.
 \paragraph{}
 These along with several other points were to be, first, verified and then built upon.
-
-
-
-
-
-
-
-
-
-
-
-
+\subsection{My work on $1$A $1246$-$588$}
+\paragraph{}
+Predominantly when one receives data, there are two things to be done, with it, namely spectral analysis, where one looks at the energy spectrum of the source, and the temporal analysis (also known as the timing analysis) wherein we look a the change of flux throughout the duration of the observation. These two analysis are completely different since we cannot perform energy spectral analysis using timing data, and similarly we cannot perform timing analysis using energy spectrum. 
+\paragraph{}
+Now, we start with the temporal analysis, from which we can determine the classification of the source, which would then let us take the further steps. Upon first plotting the CCD, we can very clearly see that the source is an atoll source, along with being primarily in the soft state:
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.8\linewidth, height=8cm]{CCD_300.pdf}
+\caption{CCD with 300 second time bin. This figure clearly shows the atoll nature of the source.}
+\label{CCD_300s}
+\end{center}
+\end{figure}
+\paragraph{}
+Now, the pooints with huge error bars are the outliers with huge intensity variations. Other than that, the rest is from the source. We can clearly see that most of the data points lie below 1 along the x axis, signalling towards a higher intensity in the soft x-ray band. We can also see that most of data points are around 1 in the hard energy axis, signalling that the source doesn't change much in the hard energy range. 
+\paragraph{}
+Given that the source doesn't change much during the observation, we do not have different phases, and hence phase resolved spectroscopy becomes pointless since all of them would yield the same results. Note that figure \ref{CCD_300s} is obtained using the lightcurves of the same instrument (LAXPC), hence no need for normalization. Also, given the above we now need to plot the power spectrum so that if there are any oscillations in the data, possibly produced because of oscillations in the data, we would be able to see them. I plot the powerspectrum using powspec as shown in \ref{Powspec_1s}.
+\begin{figure}[h]
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1.0\linewidth, height=7.5cm]{powspec_1s.pdf} 
+\caption{Powspec plot with Nyquist frequency 0.5 Hz}
+\label{Powspec_1s}
+\end{subfigure}
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1.0\linewidth, height=7.5cm]{LXPC2_50s.pdf}
+\caption{50 second background corrected light curve using LAXPC. Here we can see the intensities rise and fall over each GTI.}
+\label{LAXPC2_LC_50s}
+\end{subfigure}
+\caption{LAXPC Power spectrum for 1 second bin time and 50 second light curve.}
+\end{figure}
+\paragraph{}
+The above figure is the Leahy normalized power spectrum. We see several peaks between 10$^{-4}$ and 10$^{-3}$ Hz. However, those peaks are the peaks due to the oscillations generated in the data because of the satellite passing through SAA. The flux increases each time the satellite approaches SAA and decreases when it goes away. This can be seen in figure \ref{LAXPC2_LC_50s}. 
+\paragraph{}
+We can also see that there seems to be a QPO like peak in the power spectrum, however, there is a strong probability that that peak is because of the gaps in light curve which can be seen in the 50s time binned version of the same. 
+\paragraph{}
+Apart from this, in the light curve, we also see a net rise and fall in intensity. However, turns out, this feature is present in all LAXPC data. It is prominent here since the source flux is so low that it is not discernible from the background. Apart from all these, we can also see that the light curve is mostly featureless, and so is the power spectrum. 
+\paragraph{}
+We also look at the hardness intensity diagrams of both the energy ratios and find a similar pattern, and it also reinforces our initial claim that the source is emitting primarily in the soft xray regime. \\
+\begin{figure}[h]
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1.0\linewidth, height=7.5cm]{3-5_5-9_HID_300s.pdf}
+\caption{HID of 3-5 KeV and 5-9 KeV light curves}
+\label{HID1_300s}
+\end{subfigure}
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1.0\linewidth, height=7.5cm]{9-13_13-20_HID_300s.pdf}
+\caption{HID of 9-13 KeV and 13-20 KeV light curves}
+\label{HID2_300s}
+\end{subfigure}
+\caption{HID plots of both the energies with 300 second time bins. This signals towards our earlier hypothesis that the source is emitting primarily in the soft x-ray regime}
+\end{figure}
+\paragraph{}
+Coming to the spectral analysis. For starters, while performing the spectral analysis, I used both LAXPC 1 and 2 data for energy ranges higher than 3 KeV and, SXT data for energy ranges higher than 0.3 KeV up till 5 KeV. Since there are multiple detectors involved, we need a constant factor, hence in all the model fittings a constant factor was considered. Other than that, we used the solar abundance tables by Lodders et.al (2003). with the absorption crossection according to Balucinska-Church \& McCammon (1992). Also, since the data is mostly poissonian, we have used poissonian statistic for the spectrum and gaussian for the background. The joint SXT and LAXPC results are as follows:
+\begin{table*}
+\begin{small}
+\caption{Summary of joint SXT and LAXPC energy spectrum without grouping}
+\label{tab:spec_sxt_laxpc_3-25KeV_1}
+\begin{center}
+\begin{tabular}{p{3cm}cc}
+\hline \hline
+Fitting parameters.                             & \texttt{BBody + Powerlaw}           & \texttt{DiskBB + Powerlaw}       \\ \hline \hline
+nH ($\times 10^{22}$)                           & $0.40_{-0.02}^{+0.02}$            &$0.56_{-0.02}^{+0.02}$          \\
+$T_{in}, kT (KeV)$                              & $0.41_{-0.01}^{+0.01}$            &$0.53_{-0.01}^{+0.01}$         \\
+$\alpha$ PhoIndex                               & $1.82_{-0.01}^{+0.01}$            &$1.79_{-0.02}^{+0.02}$         \\\hline
+$norm \ Powerlaw$                                 & $1.46E-2_{-0.48E-2}^{-0.49E-2}$   &$0.0137_{-0.4E-2}^{+0.5E-2}$        \\ \hline
+$norm \ Comptt/BBody$                             & $9.03E-4_{-4.90E-5}^{+5.13E-5}$   &$70.19_{-8.52}^{+9.67}$    \\ \hline
+Flux($10^{-10}$ erg~cm$^{-2}$ s$^{-1}$)        & $21.79$                           &$21.77$                       \\
+\hline \hline
+pgstat/dof/BIC                                  &  1390/615/1428                    & 1333/615/1372               \\
+\hline \hline
+\end{tabular}
+\end{center}
+\end{small}
+\end{table*}
+\paragraph{}
+First, as per \cite{t'Zand} The spectrum of 1A 1246-588 fit well with the comptonized model, however, what we noticed that the comptonized model did not fit well with the data. However, I tried to fit the aforementioned models \texttt{BBody+Powerlaw} and \texttt{DiskBB+Powerlaw} with the data and the fitting parameters are as shown in table \ref{tab:spec_sxt_laxpc_3-25KeV}. Note that in order to compare the fit I used Bayesian Information Criteria (BIC) \cite{BIC1} since the data that I used was poissonian in nature. 
+\paragraph{}
+After binning the data to make it gaussian, I performed the same analysis on the grouped data to obtain the parameters shown in table \ref{tab:spec_sxt_laxpc_3-25KeV_2}.
+\begin{table*}
+\begin{small}
+\caption{Summary of joint SXT and LAXPC energy spectrum with grouping (Poissonian data converted to gaussian)}
+\label{tab:spec_sxt_laxpc_3-25KeV_2}
+\begin{center}
+\begin{tabular}{p{3cm}cc}
+\hline \hline
+Fitting parameters.                             & \texttt{Gabs*Powerlaw + compTT}   & \texttt{Gabs*Powerlaw + DiskBB} \\ \hline \hline
+nH ($\times 10^{22}$)                           & $0.43_{-0.07}^{+0.04}$            &$0.57_{-0.03}^{+0.02}$         \\
+$T_{in}, kT (KeV)$                              & $38.47_{-}^{-}$                 &$0.52_{-0.03}^{+0.02}$         \\
+$T_0$                                           & $0.31_{-0.02}^{+0.02}$            & ---                         \\
+$\alpha$, PhoIndex                              & $1.70_{-0.06}^{+0.05}$            &$1.76_{-0.03}^{+0.03}$         \\\hline
+$norm \ Powerlaw$                                 & $1.09E-2_{-1.59E-3}^{+1.57E-3}$   &$1.31E-2_{-0.86E-3}^{+1.21E-3}$\\ \hline
+$norm \ Comptt/BBody$                             & $1.27E-3_{-}^{-}$               &$79.85_{-20.49}^{+23.82}$   \\ \hline
+$\tau_p$                                        & $1.78E-2_{-}^{-}$               & ---   \\
+\hline \hline
+$\chi^2$(dof)                                   &  1.22(479)                        & 1.19(481)               \\
+\hline \hline
+\end{tabular}
+\end{center}
+\end{small}
+\end{table*}
+\paragraph{}
+I also introduced a model to account for the slight absorption at $\approx$12 KeV (using a gaussian absorption model \texttt{Gabs}) since it looked like there was some absorption feature at that energy. After a bit of searching, that feature turned out to be an artefact due to LAXPC. The mentioned plots are as shown in figure \ref{Spec2}.
+\begin{figure}[h]
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1.0\linewidth, height=7.5cm]{tbabs_gabsPl+comptt.pdf}
+\caption{\texttt{Gabs*Powerlaw + compTT} energy spectrum}
+\label{Spec3}
+\end{subfigure}
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1.0\linewidth, height=7.5cm]{tbabs_gabsPl+diskbb.pdf}
+\caption{\texttt{Gabs*Powerlaw + DiskBB} energy spectrum}
+\label{Spec4}
+\end{subfigure}
+\caption{Spectral plots for the table \ref{tab:spec_sxt_laxpc_3-25KeV_2}}
+\label{Spec2}
+\end{figure}
+\paragraph{}
+To conclude the work, the timing properties of the source remain largely inconclusive partly due to the low luminosity of the source, apart from that the spectrum of the source gives information about several parameters of the source such as the thermal temperature of the inner portion of the disk, the number of hydrogen, the seed photon temperature etc. I am still wroking on understanding the data, and what the results of the spectral analysis mean, hence this is a work in progress. 
+\paragraph{}
+Now, the next step of the timing analysis would be to plot the current CCD with the CCD obtained from RXTE, which is taken over an extended period of time which would give us information about what was the phase of the source during observation. This along with a strong theorotical understanding of the astrophysical phinomena would give me a deeper understanding of the source 1A 1246-588. 
 
 
 
@@ -1484,15 +1477,18 @@ These along with several other points were to be, first, verified and then built
 \bibitem{Kieth}Arnaud, Keith. “Xspec Manual.” NASA, NASA, heasarc.gsfc.nasa.gov/xanadu/xspec/manual/XspecManual.html.
 \bibitem{Xselect_UG}“Xselect User's Guide.” NASA, NASA, heasarc.gsfc.nasa.gov/ftools/xselect/xselect.html.
 \bibitem{RXTEG1}“RXTE Getting Started Guide.” NASA, NASA, heasarc.gsfc.nasa.gov/docs/xte/start\_guide.html\#directories\_top.
-
-
 \bibitem{Choudhary1}Choudhuri, A. (2010). Elements of plasma astrophysics. In Astrophysics for Physicists (pp. 219-260). Cambridge: Cambridge University Press. doi:10.1017/CBO9780511802218.009
 \bibitem{Choudhary2}Choudhuri, A. (2010). End states of stellar collapse. In Astrophysics for Physicists (pp. 127-152). Cambridge: Cambridge University Press. doi:10.1017/CBO9780511802218.006
 \bibitem{Choudhary3}Choudhuri, A. (2010). Interaction of radiation with matter. In Astrophysics for Physicists (pp. 23-60). Cambridge: Cambridge University Press. doi:10.1017/CBO9780511802218.003
 \bibitem{Choudhary4}Choudhuri, A. (2010). Introduction. In Astrophysics for Physicists (pp. 1-22). Cambridge: Cambridge University Press. doi:10.1017/CBO9780511802218.002
 \bibitem{Choudhary5}Choudhuri, A. (2010). Stellar astrophysics I: Basic theoretical ideas and observational data. In Astrophysics for Physicists (pp. 61-90). Cambridge: Cambridge University Press. doi:10.1017/CBO9780511802218.004
 \bibitem{Choudhary6}Choudhuri, A. (2010). Stellar astrophysics II: Nucleosynthesis and other advanced topics. In Astrophysics for Physicists (pp. 91-126). Cambridge: Cambridge University Press. doi:10.1017/CBO9780511802218.005
-\bibitem{RXTE_standardProducts}“RXTE Standard Data Products.” NASA, NASA, heasarc.gsfc.nasa.gov/docs/xte/recipes/stdprod\_guide.html.
+\bibitem{RXTE_standardProducts}“RXTE Standard Data Products.” NASA, NASA, heasarc.gsfc.nasa.gov/docs/xte/recipes/stdprod\_ \\ guide.html.
+\bibitem{redchisquared}Andrae, et al. “Dos and Donts of Reduced Chi-Squared.” [Astro-Ph/0005112] A Determination of the Hubble Constant from Cepheid Distances and a Model of the Local Peculiar Velocity Field, American Physical Society, 16 Dec. 2010, arxiv.org/abs/1012.3754.
+\bibitem{xronwin1}“Guide to Windows and Xronwin.” NASA, NASA, heasarc.gsfc.nasa.gov/docs/xanadu/xronos/manual/node7.html.
+\bibitem{BIC1}Wikipedia contributors. "Bayesian information criterion." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 14 Sep. 2018. Web. 15 Nov. 2018.
+
+
   	
 
 \end{thebibliography}
